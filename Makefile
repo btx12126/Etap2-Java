@@ -3,8 +3,9 @@ CFLAGS = -Wall -Wextra -g
 
 all: program
 
-program: main.c io.c stats.c
-	$(CC) $(CFLAGS) main.c io.c stats.c -o program
+program: main.c graph.c layout.c
+	$(CC) $(CFLAGS) main.c graph.c layout.c -o program
 
 clean:
 	rm -f program
+
