@@ -1,35 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "io.h"
-#include "stats.h"
+#include "graph.h"
+#include "layout.h"
 
 int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        printf("Usage: %s input_file\n", argv[0]);
+        printf("Usage: %s graph.txt\n", argv[0]);
         return 1;
     }
 
-    int *numbers = NULL;
-    int count = read_numbers(argv[1], &numbers);
+    Edge *edges;
+    int m = read_graph(argv[1], &edges);
 
-    if (count <= 0)
+    if (m <= 0)
     {
-        printf("Error\n");
+        printf("Error reading graph\n");
         return 1;
     }
+    int n = 10;
+    
+    double *x = malloc(n * sizeof(double));
+    double *y = malloc(n * sizeof(double));
 
-    int min = minimum(numbers, count);
-    int max = maximum(numbers, count);
-    double avg = average(numbers, count);
+    circle_layout(x, y, n);
 
-    printf("Count: %d\n", count);
-    printf("Min: %d\n", min);
-    printf("Max: %d\n", max);
-    printf("Average: %.2f\n", avg);
+    for (int i = 0; i < n; i++)
+        printf("%d %.2f %.2f\n", i, x[i], y[i]);
 
-    free(numbers);
+    free(edges);
+    free(x);
+    free(y);
 
     return 0;
 }
