@@ -6,7 +6,8 @@ typedef struct {
     int v;
 } Edge;
 
-int read_graph(const char *filename, Edge **edges);
+int read_graph(const char *filename, Edge **edges, int *n);
 
 #endif
+
 
