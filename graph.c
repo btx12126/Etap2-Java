@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "graph.h"
 
-int read_graph(const char *filename, Edge **edges)
+int read_graph(const char *filename, Edge **edges, int *n)
 {
     FILE *f = fopen(filename, "r");
     if (!f) return -1;
@@ -31,5 +31,6 @@ int read_graph(const char *filename, Edge **edges)
     *n = (max_node < 0) ? 0 : max_node + 1;
     return count;
 }
+
 
 
