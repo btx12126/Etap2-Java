@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc < 4)
+    if (argc < 5)
     {
         printf("Usage: %s graph.txt\n", argv[0]);
         return 1;
@@ -24,26 +24,38 @@ int main(int argc, char *argv[])
     
     double *x = malloc(n * sizeof(double));
     double *y = malloc(n * sizeof(double));
-
-    if (strcmp(argv[3], "circle") == 0) 
-    {
+    
+    if (strcmp(argv[3], "circle") == 0) {
         circle_layout(x, y, n);
-    }
-    else {
+    } else {
         random_layout(x, y, n);
     }
-
+    
+    if (strcmp(argv[4], "bin") == 0)
+{
+        FILE *out = fopen(argv[2], "wb");
+        if (out) {
+            fwrite(&n, sizeof(int), 1, out);
+            fwrite(x, sizeof(double), n, out);
+            fwrite(y, sizeof(double), n, out);
+            fclose(out);
+            printf("Ready!\n %s\n", argv[2]);
+        }
+}
+    else 
+{
     FILE *out = fopen(argv[2], "w");
-
     if(out)
     {
+        fprintf(out, "%d\n", n);
         for (int i = 0; i < n; i++)
             {
             fprintf(out, "%d %.2f %.2f\n", i, x[i], y[i]);
             }
         fclose(out);
         printf("Ready! \n %s\n", argv[2]);
-    }
+    } 
+}
 
     free(edges);
     free(x);
@@ -51,6 +63,7 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
 
 
 
