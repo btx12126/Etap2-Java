@@ -9,11 +9,14 @@ int read_graph(const char *filename, Edge **edges)
 
     int capacity = 10;
     int count = 0;
+    int max_node = -1;
 
     Edge *e = malloc(capacity * sizeof(Edge));
 
     while (fscanf(f, "%d %d", &e[count].u, &e[count].v) == 2)
     {
+        if (e[count].u > max_node) max_node = e[count].u;
+        if (e[count].v > max_node) max_node = e[count].v;
         count++;
 
         if (count >= capacity)
@@ -25,6 +28,8 @@ int read_graph(const char *filename, Edge **edges)
 
     fclose(f);
     *edges = e;
+    *n = (max_node < 0) ? 0 : max_node + 1;
     return count;
 }
+
 
