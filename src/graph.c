@@ -23,7 +23,14 @@ int read_graph(const char *filename, Edge **edges, int *n)
         if (count >= capacity)
         {
             capacity *= 2;
-            e = realloc(e, capacity * sizeof(Edge));
+            Edge *temp = realloc(e, capacity * sizeof(Edge));
+            if (temp == NULL) { 
+                fprintf(stderr, "Error: Memory reallocation failed\n"); [cite: 203-204]
+                free(e); 
+                fclose(f);
+                return -1;
+            }
+            e = temp;
         }
     }
 
