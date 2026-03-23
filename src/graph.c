@@ -25,7 +25,7 @@ int read_graph(const char *filename, Edge **edges, int *n)
             capacity *= 2;
             Edge *temp = realloc(e, capacity * sizeof(Edge));
             if (temp == NULL) { 
-                fprintf(stderr, "Error: Memory reallocation failed\n"); [cite: 203-204]
+                fprintf(stderr, "Error: Memory reallocation failed\n");
                 free(e); 
                 fclose(f);
                 return -1;
