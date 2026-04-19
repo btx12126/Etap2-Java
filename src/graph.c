@@ -21,33 +21,22 @@ int read_graph(const char *filename, Edge **edges, int *n, int **exists)
     double w;
 
    while (fscanf(f, " %63s %d %d %lf", name, &u, &v, &w) == 4) {
-        if (count >= capacity) {
-            capacity *= 2;
-            Edge *temp = realloc(e, capacity * sizeof(Edge));
-            if (!temp) { free(e); fclose(f); return -1; }
-            e = temp;
-			count++;
-        }
-	   if (count == 0) {
-    	fprintf(stderr, "Błąd: Nie wczytano żadnych krawędzi. Sprawdź format pliku.\n");
-	   }
-        e[count].u = u;
-        e[count].v = v;
-        e[count].weight = w;
-
-	ex[u] = 1; 
-        ex[v] = 1;
-
-        if (u > max_node) max_node = u;
-        if (v > max_node) max_node = v;
-        count++;
+    if (count >= capacity) {
+        capacity *= 2;
+        Edge *temp = realloc(e, capacity * sizeof(Edge));
+        if (!temp) { free(e); free(ex); fclose(f); return -1; }
+        e = temp;
     }
+    e[count].u = u;
+    e[count].v = v;
+    e[count].weight = w;
 
-    *exists = ex;
-    fclose(f);
-    *edges = e;
-    *n = (max_node < 0) ? 0 : max_node + 1;
-    return count;
+    if (u < 10000) ex[u] = 1; 
+    if (v < 10000) ex[v] = 1;
+
+    if (u > max_node) max_node = u;
+    if (v > max_node) max_node = v;
+    count++;
 }
 
 
