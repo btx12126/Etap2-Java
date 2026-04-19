@@ -8,8 +8,7 @@ typedef struct {
     double weight;
 } Edge;
 
-int read_graph(const char *filename, Edge **edges, int *n);
+int read_graph(const char *filename, Edge **edges, int *n, int **exists);
 
 #endif
-
 
