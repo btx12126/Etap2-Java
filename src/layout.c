@@ -11,6 +11,7 @@ void circle_layout(double *x, double *y, int n) {
 
     for (int i = 0; i < n; i++)
     {
+        double angle = 2.0 * M_PI * i / n;
         x[i] = R * cos(2 * M_PI * i / n);
         y[i] = R * sin(2 * M_PI * i / n);
     }
@@ -18,8 +19,8 @@ void circle_layout(double *x, double *y, int n) {
 void random_layout(double *x, double *y, int n) {
     srand(time(NULL));
     for (int i = 0; i < n; i++) {
-        x[i] = (rand() % 200) - 100;
-        y[i] = (rand() % 200) - 100;
+        x[i] = (rand() % 2000) / 10.0 - 100.0; 
+        y[i] = (rand() % 2000) / 10.0 - 100.0;
     }
 }
 
