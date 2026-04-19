@@ -38,6 +38,20 @@ int read_graph(const char *filename, Edge **edges, int *n, int **exists)
     if (v > max_node) max_node = v;
     count++;
 }
+fclose(f);
+
+    if (count == 0) {
+        free(e);
+        free(ex);
+        return 0;
+    }
+
+    *exists = ex;
+    *edges = e;
+    *n = (max_node < 0) ? 0 : max_node + 1;
+    
+    return count;
+}
 
 
 
