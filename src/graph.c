@@ -14,24 +14,24 @@ int read_graph(const char *filename, Edge **edges, int *n)
     Edge *e = malloc(capacity * sizeof(Edge));
     if (!e) { fclose(f); return -1; }
 
-    while (fscanf(f, "%d %d", &e[count].u, &e[count].v) == 2)
-    {
-        if (e[count].u > max_node) max_node = e[count].u;
-        if (e[count].v > max_node) max_node = e[count].v;
-        count++;
+    char name[64];
+    int u, v;
+    double w;
 
-        if (count >= capacity)
-        {
+   while (fscanf(f, "%63s %d %d %lf", name, &u, &v, &w) == 4) {
+        if (count >= capacity) {
             capacity *= 2;
             Edge *temp = realloc(e, capacity * sizeof(Edge));
-            if (temp == NULL) { 
-                fprintf(stderr, "Error: Memory reallocation failed\n");
-                free(e); 
-                fclose(f);
-                return -1;
-            }
+            if (!temp) { free(e); fclose(f); return -1; }
             e = temp;
         }
+        e[count].u = u;
+        e[count].v = v;
+        e[count].weight = w;
+
+        if (u > max_node) max_node = u;
+        if (v > max_node) max_node = v;
+        count++;
     }
 
     fclose(f);
